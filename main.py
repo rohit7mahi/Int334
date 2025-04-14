@@ -17,6 +17,10 @@ def read_imagefile(file) -> np.ndarray:
     image = Image.open(io.BytesIO(file)).resize((32, 32))
     return np.array(image) / 255.0
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the CIFAR-10 Image Classifier API. Go to /docs to test the /predict endpoint."}
+
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     image_bytes = await file.read()
